@@ -34,3 +34,24 @@ def concatenate_files(path, new_file_title):
                 continue
             with open(filename, 'rb') as readfile:
                 shutil.copyfileobj(readfile, outfile)
+
+
+def convert2CSV(book):
+    f = open(book, encoding='utf-8')
+
+    text = f.read()
+    n = 250
+
+    words = iter(text.split())
+    lines, current = [], next(words)
+    for word in words:
+        if len(current) + 1 + len(word) > n:
+            lines.append(current)
+            current = word
+        else:
+            current += " " + word
+    lines.append(current)
+
+    import pandas as pd
+    df = pd.DataFrame(lines, columns=["colummn"])
+    df.to_csv('list.csv', index=False)

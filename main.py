@@ -11,6 +11,8 @@ if __name__ == '__main__':
     f = open('bookt1', encoding='urf-8')
     book = f.read()
 
+    convert2CSV("bookt1")
+
     text = remove_punctuations(book)
     text = normalize_arabic(text)
     text = remove_diacritics(text)
