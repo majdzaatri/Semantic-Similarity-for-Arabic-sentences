@@ -19,11 +19,10 @@ class Vectorizer:
                                                                             #         vector.append(token_vector)
 
         vector = []
-        if sentence != float('nan'):
-            for word in sentence:
-                word_vector = self.word_embedding_model.get_vector(word)
-                if word_vector is not "unknown":
-                    vector.append(word_vector)
+        for word in sentence:
+            word_vector = self.word_embedding_model.get_vector(word)
+            if word_vector is not "unknown":
+                vector.append(word_vector)
 
         return vector
 

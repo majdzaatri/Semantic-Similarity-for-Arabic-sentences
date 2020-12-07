@@ -39,35 +39,24 @@ def concatenate_files(path, new_file_title):
 
 def get_DataFrame(book1, col_name):
 
-    n = 250
-
+    n = 20
+    i = 2
     words1 = iter(book1.split())
-    # words2 = iter(book2.split())
-
     lines1, current1 = [], next(words1)
-    # lines2, current2 =[], next(words2)
 
     for word in words1:
-        if len(current1) + 1 + len(word) > n:
+        if i > n:
             lines1.append(current1)
             current1 = word
+            i = 2
         else:
             current1 += " " + word
+            i+=1
 
-    # for word in words2:
-    #     if len(current2) + 1 + len(word) > n:
-    #         lines2.append(current2)
-    #         current2 = word
-    #     else:
-    #         current2 += " " + word
-    #
     lines1.append(current1)
-    # lines2.append(current2)
 
     import pandas as pd
     df1 = pd.DataFrame(lines1, columns=[col_name])
-    # df2 = pd.DataFrame(lines2, columns=['book2'])
-    # df = pd.concat([df1,df2])
     return df1
 
 def pad_tensor(tensor, max_len, dtype='float32'):

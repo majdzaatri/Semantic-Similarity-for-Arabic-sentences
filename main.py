@@ -50,17 +50,18 @@ if __name__ == '__main__':
     train_a_vectors = pad_tensor(train_a_vectors, max_len)
     train_b_vectors = pad_tensor(train_b_vectors, max_len)
 
-    import tensorflow as tf
     model = Sequential()
-    inp = model.add(Bidirectional(LSTM(100, return_sequences=True), input_shape=(3495941, 100)))
-    out = model.add(Bidirectional(LSTM(100, return_sequences=True)))
+    model.add(Bidirectional(LSTM(100, return_sequences=True, input_shape=(126, 100))))
+    model.add(Bidirectional(LSTM(100)))
+    model.add(Dense(1))
+    loss_fn = tf.keras.losses.Poisson(reduction="auto", name="poisson")
+    model.compile(loss='mean_squared_error', optimizer='adam')
 
-    # model.compile(optimizer='adam')
+    labels = [1]*5811
 
-    model.fit(train_a_vectors,train_b_vectors,epochs=100, batch_size=32)
-
+    model.fit(train_a_vectors, labels, epochs=100,  batch_size=32)
     #
-    # model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
     #
     # # model.fit(words_vector[0:200], epochs=3, batch_size=64, steps_per_epoch=1000)
     # # score = model.evaluate(words_vector[200:400])
