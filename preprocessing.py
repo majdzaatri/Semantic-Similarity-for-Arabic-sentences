@@ -1,9 +1,13 @@
 import re
 import string
+import nltk
+from nltk.corpus import stopwords
 
 arabic_punctuations = '''`÷×؛<>_()*&^%][ـ،/:"؟.,'{}~¦+|!”…“–ـ'''
 english_punctuations = string.punctuation
 punctuations_list = arabic_punctuations + english_punctuations
+nltk.download('stopwords')
+stop_words = stopwords.words()
 
 arabic_diacritics = re.compile("""
                              ّ    | # Tashdid
@@ -24,6 +28,9 @@ def normalize_arabic(text):
     text = re.sub("ئ", "ء", text)
     text = re.sub("ة", "ه", text)
     text = re.sub("گ", "ك", text)
+    text = re.sub(r'\s*[A-Za-z]+\b', '', text)
+
+    text = ''.join(word for word in text.split() if word not in stop_words)
     return text
 
 

@@ -2,6 +2,7 @@ import os
 import gensim
 import glob
 import shutil
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 def get_init_parameters(path):
     word_embedding_model = gensim.models.Word2Vec.load(path)
@@ -36,22 +37,38 @@ def concatenate_files(path, new_file_title):
                 shutil.copyfileobj(readfile, outfile)
 
 
-def convert2CSV(book):
-    f = open(book, encoding='utf-8')
+def get_DataFrame(book1, col_name):
 
-    text = f.read()
     n = 250
 
-    words = iter(text.split())
-    lines, current = [], next(words)
-    for word in words:
-        if len(current) + 1 + len(word) > n:
-            lines.append(current)
-            current = word
+    words1 = iter(book1.split())
+    # words2 = iter(book2.split())
+
+    lines1, current1 = [], next(words1)
+    # lines2, current2 =[], next(words2)
+
+    for word in words1:
+        if len(current1) + 1 + len(word) > n:
+            lines1.append(current1)
+            current1 = word
         else:
-            current += " " + word
-    lines.append(current)
+            current1 += " " + word
+
+    # for word in words2:
+    #     if len(current2) + 1 + len(word) > n:
+    #         lines2.append(current2)
+    #         current2 = word
+    #     else:
+    #         current2 += " " + word
+    #
+    lines1.append(current1)
+    # lines2.append(current2)
 
     import pandas as pd
-    df = pd.DataFrame(lines, columns=["colummn"])
-    df.to_csv('list.csv', index=False)
+    df1 = pd.DataFrame(lines1, columns=[col_name])
+    # df2 = pd.DataFrame(lines2, columns=['book2'])
+    # df = pd.concat([df1,df2])
+    return df1
+
+def pad_tensor(tensor, max_len, dtype='float32'):
+    return pad_sequences(tensor, padding='post', dtype=dtype, maxlen=max_len)
