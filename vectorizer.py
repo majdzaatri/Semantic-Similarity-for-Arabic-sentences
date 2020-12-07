@@ -19,11 +19,11 @@ class Vectorizer:
                                                                             #         vector.append(token_vector)
 
         vector = []
-
-        for word in sentence:
-            word_vector = self.word_embedding_model.get_vector(word)
-            if word_vector is not "unknown":
-                vector.append(word_vector)
+        if sentence != float('nan'):
+            for word in sentence:
+                word_vector = self.word_embedding_model.get_vector(word)
+                if word_vector is not "unknown":
+                    vector.append(word_vector)
 
         return vector
 
@@ -36,8 +36,8 @@ class Vectorizer:
         import math
         import pandas as pd
         for sentence in df['book2']:
-            if sentence != 'nan':
-                print(sentence)
+            if sentence != float('nan'):
+                print("in vectorize_df: ",sentence)
 
         b_vectors = [self.vectorize_sentence(sentence) for sentence in df['book2']]
 

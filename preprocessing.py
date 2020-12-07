@@ -28,7 +28,7 @@ def normalize_arabic(text):
     text = re.sub("ئ", "ء", text)
     text = re.sub("ة", "ه", text)
     text = re.sub("گ", "ك", text)
-    text = re.sub(r'\s*[A-Za-z]+\b', '', text)
+    # text = re.sub(r'\s*[A-Za-z]+\b', ' ', text)
 
     text = ''.join(word for word in text.split() if word not in stop_words)
     return text

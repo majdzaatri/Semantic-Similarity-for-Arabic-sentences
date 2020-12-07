@@ -22,7 +22,7 @@ if __name__ == '__main__':
     book2 = f.read()
 
     book1,book2 = remove_punctuations(book1),remove_punctuations(book2)
-    book1,book2 = normalize_arabic(book1), normalize_arabic(book2)
+    # book1,book2 = normalize_arabic(book1), normalize_arabic(book2)
     book1,book2 = remove_diacritics(book1), remove_diacritics(book2)
     book1,book2 = remove_repeating_char(book1), remove_repeating_char(book2)
 
@@ -37,6 +37,8 @@ if __name__ == '__main__':
     word_embedding = WordEmbeddings(word_embedding_model)
     tokenizer = Tokenizer()
     vectorizer = Vectorizer(word_embedding)
+
+    df.dropna(subset=["book2"], inplace=True)
 
     train_a_vectors, train_b_vectors = vectorizer.vectorize_df(df)
     train_max_a_length = len(max(train_a_vectors, key=len))
@@ -53,7 +55,7 @@ if __name__ == '__main__':
     inp = model.add(Bidirectional(LSTM(100, return_sequences=True), input_shape=(3495941, 100)))
     out = model.add(Bidirectional(LSTM(100, return_sequences=True)))
 
-    model.compile(optimizer='adam', loss=tf.keras.losses.)
+    # model.compile(optimizer='adam')
 
     model.fit(train_a_vectors,train_b_vectors,epochs=100, batch_size=32)
 
