@@ -54,7 +54,6 @@ if __name__ == '__main__':
     model.add(Bidirectional(LSTM(100, return_sequences=True, input_shape=(126, 100))))
     model.add(Bidirectional(LSTM(100)))
     model.add(Dense(1))
-    loss_fn = tf.keras.losses.Poisson(reduction="auto", name="poisson")
     model.compile(loss='mean_squared_error', optimizer='adam')
 
     labels = [1]*5811
