@@ -5,6 +5,9 @@ from tensorflow.keras.layers import *
 from keras_self_attention import SeqSelfAttention
 from tensorflow.keras.models import Model
 from attention import Attention
+import tensorflow as tf
+
+
 # from attention_layer import AttentionLayer
 
 class SiameseModel:
@@ -31,12 +34,11 @@ class SiameseModel:
         right_self_attention_output = self_attention(first_right_lstm_output)
         second_right_lstm_output = Bilstm_2(first_right_lstm_output)
 
+        left_attention_output = tf.keras.layers.Attention()([second_left_lstm_output, right_self_attention_output])
+        right_attention_output = tf.keras.layers.Attention()([second_right_lstm_output, left_self_attention_output])
 
-        left_attention_output = attention([second_left_lstm_output, right_self_attention_output])
-        right_attention_output = attention([second_right_lstm_output, left_self_attention_output])
-
-        left_concatenation = Concatenate([left_self_attention_output, left_attention_output])
-        right_concatenation = Concatenate([right_self_attention_output, right_attention_output])
+        left_concatenation = left_self_attention_output + left_attention_output
+        right_concatenation = right_self_attention_output + right_attention_output
 
         left_nonlinear_output = non_linear(left_concatenation)
         right_nonlinear_output = non_linear(right_concatenation)
@@ -45,4 +47,5 @@ class SiameseModel:
 
         self.model = Model([Bilstm_1, Bilstm_2])
 
-        return self.model
+
+s = SiameseModel()
