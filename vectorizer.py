@@ -6,17 +6,6 @@ class Vectorizer:
         # self.tokenizer = tokenizer
 
     def vectorize_sentence(self, sentence, threshold = -1):
-                                                                            # nltk.download('punkt')
-                                                                            # tokens = word_tokenize(sentence)
-                                                                            # # tokens = self.tokenizer.tokenize(sentence)
-                                                                            # if threshold > 0:
-                                                                            #     tokens = tokens[:threshold]
-                                                                            #
-
-                                                                            # for token in tokens:
-                                                                            #     token_vector = self.word_embedding_model.get_vector(token)
-                                                                            #     if token_vector is not "unknown":
-                                                                            #         vector.append(token_vector)
 
         vector = []
         for word in sentence:

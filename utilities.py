@@ -2,6 +2,7 @@ import os
 import gensim
 import glob
 import shutil
+
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 def get_init_parameters(path):
@@ -15,7 +16,6 @@ def get_init_parameters(path):
 
 
 
-# def split_datasets(book, test_size, seed=42):
 def split_datasets():
     x = []
     book = open("text.txt", encoding="utf-8")

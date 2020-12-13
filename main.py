@@ -10,6 +10,7 @@ from pathlib import Path
 from word_embeddings import WordEmbeddings
 from tokenizer import Tokenizer
 from vectorizer import  Vectorizer
+from siamese import SiameseModel
 
 if __name__ == '__main__':
 
@@ -50,15 +51,17 @@ if __name__ == '__main__':
     train_a_vectors = pad_tensor(train_a_vectors, max_len)
     train_b_vectors = pad_tensor(train_b_vectors, max_len)
 
-    model = Sequential()
-    model.add(Bidirectional(LSTM(100, return_sequences=True, input_shape=(126, 100))))
-    model.add(Bidirectional(LSTM(100)))
-    model.add(Dense(1))
-    model.compile(loss='mean_squared_error', optimizer='adam')
-
-    labels = [1]*5811
-
-    model.fit(train_a_vectors, labels, epochs=100,  batch_size=32)
+    siameseModel = SiameseModel()
+    siameseModel.summary()
+    # model = Sequential()
+    # model.add(Bidirectional(LSTM(100, return_sequences=True, input_shape=(126, 100))))
+    # model.add(Bidirectional(LSTM(100)))
+    # model.add(Dense(1))
+    # model.compile(loss='mean_squared_error', optimizer='adam')
+    #
+    # labels = [1]*5811
+    #
+    # model.fit(train_a_vectors, labels, epochs=100,  batch_size=32)
     #
 
     #
